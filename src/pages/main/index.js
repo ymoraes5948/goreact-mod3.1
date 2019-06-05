@@ -1,12 +1,31 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as favoriteActions from "../../store/actions/favorites";
 
 class Main extends Component {
+  static propTypes = {
+    addFavorite: PropTypes.func.isRequired,
+    favorites: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        description: PropTypes.string,
+        url: PropTypes.string
+      })
+    ).isRequired
+  };
+
   state = {
     repositoryInput: ""
+  };
+
+  handleAddRepository = event => {
+    event.preventDefault();
+
+    this.props.addFavorite();
   };
 
   render() {
@@ -21,12 +40,14 @@ class Main extends Component {
           <button type="submit">Adicionar</button>
         </form>
         <ul>
-          <li>
-            <p>
-              <strong>a</strong>()
-            </p>
-            <a href="link">link</a>
-          </li>
+          {this.props.favorites.map(favorite => (
+            <li key={favorite.id}>
+              <p>
+                <strong>{favorite.name}</strong>({favorite.description})
+              </p>
+              <a href={favorite.url}>Acessar</a>
+            </li>
+          ))}
         </ul>
       </Fragment>
     );
