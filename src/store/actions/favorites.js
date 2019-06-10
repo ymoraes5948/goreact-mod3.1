@@ -6,4 +6,4 @@ export const addFavoriteRequest = repository => ({
 export const addFavoriteSuccess = data => ({
     type: "ADD_FAVORITE_SUCCESS",
     payload: { data }
-});
+}); 
